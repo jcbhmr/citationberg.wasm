@@ -1,0 +1,19 @@
+name: Upstream
+on:
+  schedule:
+    - cron: "41 */6 * * *"
+  workflow_dispatch:
+concurrency: ${{ github.workflow }}
+jobs:
+  upstream:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: git remote add upstream https://github.com/typst/citationberg.git
+      - run: git fetch upstream
+      - run: git switch upstream 2>/dev/null || git switch -c upstream
+      - run: git reset --hard upstream/main
+      - run: git push --force origin upstream
+      
