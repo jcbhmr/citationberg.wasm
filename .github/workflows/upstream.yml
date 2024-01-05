@@ -18,7 +18,7 @@ jobs:
       - run: git reset --hard upstream/main
       - run: git push --force origin upstream
       - run: |
-          if [[ $(git rev-list --count HEAD ^origin/HEAD) == 0 ]]; then
+          if [[ $(git rev-list --count HEAD ^origin/main) == 0 ]]; then
             echo "No upstream changes!"
           else
             gh pr create --fill
