@@ -17,11 +17,6 @@ jobs:
       - run: git switch upstream 2>/dev/null || git switch -c upstream
       - run: git reset --hard upstream/main
       - run: git push --force origin upstream
-      - run: |
-          if [[ $(git rev-list --count HEAD ^origin/main) == 0 ]]; then
-            echo "No upstream changes!"
-          else
-            gh pr create --fill
-          fi
+      - run: gh pr create --fill || true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
